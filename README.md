@@ -27,13 +27,29 @@ docker-compose --version
 docker-compose up
 ```
 
+- La API estará disponible en:
+
+  - [**http://localhost:8080**](http://localhost:8080)
+
+- La base de datos en:
+
+  - **localhost:5432**
+
+- El servicio mock en:
+
+  - [**http://localhost:8081**](http://localhost:8081)
+
 ---
 
 ## 🛠️ Imágenes Utilizadas
 
-- Imagen de la API: `docker pull tu_usuario_dockerhub/percentage-api:latest`
-- Base de datos: imagen oficial de Postgres `postgres:15`
-- Mock: imagen oficial de `rodolpheche/wiremock`
+- Imagen de la API publicada en Docker Hub:
+
+  [📲 Ver en Docker Hub](https://hub.docker.com/r/tu_usuario_dockerhub/percentage-api)
+
+  ```bash
+  docker pull omarlemv/percentage-api
+  ```
 
 ---
 

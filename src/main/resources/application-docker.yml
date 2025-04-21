@@ -1,0 +1,41 @@
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/percentage
+    username: postgres
+    password: postgres
+
+external:
+  percentage:
+    #base-url: http://percentage-mock:8080/ #api/percentage
+    base-url: http://mock:8081
+
+services:
+  wiremock:
+    image: wiremock/wiremock:latest
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./src/main/resources/wiremock:/home/wiremock
+
+logging:
+  level:
+    root: INFO
+    com.example.percentage: DEBUG
+    org.springframework.r2dbc: DEBUG
+    io.r2dbc.h2: DEBUG
+    org.h2: TRACE
+    org.springframework.boot.context.config: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+bucket4j:
+  enabled: false
+
+ratelimit:
+  capacity: 3
+  refill-tokens: 3
+  refill-period: PT1M

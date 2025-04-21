@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_percentage
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: percentage
+    ports:
+      - "5432:5432"
+    networks:
+      - percentage-network
+    volumes:
+      - ./docker/postgres:/docker-entrypoint-initdb.d
+
+  percentage-api:
+    #build: .
+    image: omarlemv/percentage-api:latest
+    container_name: percentage-api
+    restart: always
+    environment:
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/percentage
+      SPRING_R2DBC_USERNAME: postgres
+      SPRING_R2DBC_PASSWORD: postgres
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+      EXTERNAL_PERCENTAGE_BASE-URL: http://mock:8080
+      SPRING_PROFILES_ACTIVE: docker
+      LOGGING_LEVEL_ROOT: DEBUG
+      LOGGING_LEVEL_COM_EXAMPLE_PERCENTAGE: DEBUG
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: INFO
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_started
+      mock:
+        condition: service_healthy
+    networks:
+      - percentage-network
+
+  mock:
+    image: rodolpheche/wiremock
+    container_name: mock_percentage
+    ports:
+      - "8081:8080"
+    networks:
+      - percentage-network
+    volumes:
+      - ./wiremock:/home/wiremock
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+networks:
+  percentage-network:

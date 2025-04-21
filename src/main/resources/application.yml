@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: percentage-api
+
+  # ──────────────── Base de datos reactiva ────────────────
+  r2dbc:
+    url: r2dbc:postgresql://${PERCENTAGE_DB_HOST:localhost}:5432/percentage
+    #url: r2dbc:h2:mem:///percentage;DB_CLOSE_DELAY=-1
+    username: postgres
+    password: postgres
+
+  # (opcional) Driver JDBC si usas Flyway/Liquibase
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      mode: always
+
+  # ──────────────── Cache global ────────────────
+  cache:
+    type: caffeine          # Spring Boot crea CaffeineCacheManager
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=1m
+      #spec: maximumSize=10000,expireAfterWrite=30m
+
+logging:
+  level:
+    root: INFO
+    com.example.percentage: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+    org.springframework.boot.context.config: DEBUG
+
+# ──────────────── Servicio externo mock ────────────────
+external:
+  percentage:
+    base-url: ${PERCENTAGE_BASE_URL:http://localhost:8081} #/api/percentage
+
+# ──────────────── Bucket4j (starter) ────────────────
+bucket4j:
+  enabled: true
+
+  # Declaramos el almacén de buckets en el cache "bucket4j-cache"
+  caches:
+    - name: bucket4j-cache
+      cache-to-use: caffeine    # debe coincidir con spring.cache.type
+
+
+ratelimit:
+  capacity: 5
+  refill-tokens: 5
+  refill-period: PT1M

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS history (
+    id SERIAL PRIMARY KEY,
+    endpoint VARCHAR(255) NOT NULL,
+    params TEXT,
+    response TEXT,
+    created_at TIMESTAMP NOT NULL
+);
+--  DEFAULT CURRENT_TIMESTAMP

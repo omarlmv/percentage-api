@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  r2dbc:
+    # H2 en memoria, modo compatibilidad Postgres
+    url: r2dbc:h2:mem:///percentage;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username: sa
+    password:
+
+  sql:
+    init:
+      mode: always
+
+external:
+  percentage:
+    base-url: http://localhost:8081
+
+
+logging:
+  level:
+    root: INFO
+    com.example.percentage: DEBUG
+    org.springframework.r2dbc: DEBUG
+    io.r2dbc.h2: DEBUG
+    org.h2: TRACE
+    org.springframework.boot.context.config: DEBUG

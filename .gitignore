@@ -50,5 +50,3 @@ node_modules/
 *.swp
 *.swo
 
-# Wiremock Temp
-wiremock/

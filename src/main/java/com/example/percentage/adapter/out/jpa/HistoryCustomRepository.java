@@ -5,6 +5,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface HistoryCustomRepository {
-    Mono<HistoryEntity> save(HistoryEntity entity);  // 👈 Añades save
+    Mono<HistoryEntity> save(HistoryEntity entity);
     Flux<HistoryEntity> findAllBy(Pageable pageable);
 }

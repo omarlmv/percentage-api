@@ -47,6 +47,14 @@ bucket4j:
 
 
 ratelimit:
-  capacity: 5
-  refill-tokens: 5
+  capacity: 3
+  refill-tokens: 3
   refill-period: PT1M
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html

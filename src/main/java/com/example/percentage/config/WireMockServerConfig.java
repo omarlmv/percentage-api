@@ -13,20 +13,17 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 public class WireMockServerConfig {
     @Bean(initMethod = "start", destroyMethod = "stop")
     public WireMockServer wireMockServer() {
-        // Arrancamos WireMock en el puerto 8081
         WireMockConfiguration config = WireMockConfiguration.options()
                 .port(8081);
 
         WireMockServer server = new WireMockServer(config);
 
-        // Definimos el stub para /api/percentage
         server.stubFor(get(urlEqualTo("/api/percentage"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBody("10")
                 )
         );
-
         return server;
     }
 }

@@ -27,17 +27,13 @@ docker-compose --version
 docker-compose up
 ```
 
-- La API estará disponible en:
+## 📖 Acceso a la Documentación Swagger
 
-  - [**http://localhost:8080**](http://localhost:8080)
+Una vez que la API esté corriendo, puedes acceder a la documentación Swagger desde cualquiera de las siguientes rutas:
 
-- La base de datos en:
+- [http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html) *(alternativa directa si las anteriores fallan)*
 
-  - **localhost:5432**
-
-- El servicio mock en:
-
-  - [**http://localhost:8081**](http://localhost:8081)
+> Si ves el mensaje `Failed to load remote configuration`, asegúrate de que `/v3/api-docs` esté habilitado correctamente.
 
 ---
 
@@ -45,7 +41,7 @@ docker-compose up
 
 - Imagen de la API publicada en Docker Hub:
 
-  [📲 Ver en Docker Hub](https://hub.docker.com/r/tu_usuario_dockerhub/percentage-api)
+  [📲 Ver en Docker Hub](https://hub.docker.com/repository/docker/omarlemv/percentage-api/)
 
   ```bash
   docker pull omarlemv/percentage-api
@@ -61,3 +57,45 @@ docker-compose up
 | `README.md`          | Instrucciones completas      |
 
 ---
+
+## 🧪 Ejecución en entorno local (IntelliJ IDEA)
+
+Si deseas **probar la aplicación localmente** sin usar Docker Compose:
+
+1. Abre IntelliJ IDEA.
+2. Dirígete a **Run > Edit Configurations...**
+3. Crea una nueva configuración de tipo **Spring Boot** (o edita la existente).
+4. En el campo **Program arguments**, agrega:
+
+   ```
+   --spring.profiles.active=local
+   ```
+
+5. Aplica y guarda la configuración.
+6. Ejecuta la aplicación normalmente (botón verde ▶️).
+
+Esto permitirá que la aplicación se conecte a las configuraciones locales preparadas para desarrollo.
+
+---
+
+## 🐳 Ejecución usando Docker Compose
+
+Si prefieres **no configurar el perfil local manualmente**, simplemente puedes levantar todo el entorno usando:
+
+```bash
+docker-compose up
+```
+
+Esto ejecutará:
+
+- La API
+- La base de datos
+- El servicio mock
+
+**sin necesidad de configurar perfiles manualmente** en tu entorno local.
+
+---
+
+## 📥 Descarga del Proyecto
+
+Puedes descargar este proyecto actualizado con todas las instrucciones directamente desde tu repositorio o carpeta actual.

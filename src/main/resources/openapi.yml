@@ -2,8 +2,8 @@ openapi: 3.0.3
 info:
   title: Percentage API
   version: 1.0.0
-servers:
-  - url: http://localhost:8080
+#servers:
+#  - url: http://localhost:8080
 paths:
   /api/v1/calc:
     post:

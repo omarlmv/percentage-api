@@ -2,6 +2,7 @@
 package com.example.percentage.domain;
 
 import reactor.core.publisher.Mono;
+
 import java.util.Map;
 
 public interface HistoryPort {

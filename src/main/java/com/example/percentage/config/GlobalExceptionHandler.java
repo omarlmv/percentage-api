@@ -1,25 +1,19 @@
 
 package com.example.percentage.config;
 
+import com.example.percentage.exception.ServiceUnavailableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.percentage.exception.ServiceUnavailableException;
 import java.time.Instant;
 import java.util.Map;
 
-@RestControllerAdvice
+@ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-
-    /*@ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String,Object>> handle(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("timestamp", Instant.now(), "message", ex.getMessage()));
-    }*/
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handle(Exception ex) {

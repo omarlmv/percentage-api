@@ -25,6 +25,7 @@ logging:
   level:
     root: INFO
     com.example.percentage: DEBUG
+    com.example.percentage.config: DEBUG
     org.springframework.r2dbc: DEBUG
     io.r2dbc.h2: DEBUG
     org.h2: TRACE
@@ -39,3 +40,14 @@ ratelimit:
   capacity: 3
   refill-tokens: 3
   refill-period: PT1M
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+  paths-to-match:
+    - /api/v1/**
+
+
+

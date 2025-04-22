@@ -5,14 +5,12 @@ import com.example.percentage.domain.HistoryPort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
 import java.util.Map;
 
-//@Profile("local")  // Solo en perfil "local"
 @Component
 @RequiredArgsConstructor
 @Slf4j

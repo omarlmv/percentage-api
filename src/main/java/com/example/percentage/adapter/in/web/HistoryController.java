@@ -1,20 +1,13 @@
 
 package com.example.percentage.adapter.in.web;
 
-import com.example.percentage.adapter.out.jpa.HistoryCustomRepository;
-import com.example.percentage.api.HistoryApi;
 import com.example.percentage.adapter.out.jpa.HistoryRepository;
+import com.example.percentage.api.HistoryApi;
 import com.example.percentage.model.HistoryDto;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

@@ -3,13 +3,11 @@ package com.example.percentage.service;
 
 import com.example.percentage.domain.ExternalPercentagePort;
 import com.example.percentage.domain.HistoryPort;
-//import com.example.percentage.dto.CalcResponse;
 import com.example.percentage.model.CalcResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 @Service

@@ -19,7 +19,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @RequiredArgsConstructor
 public class CacheConfig {
 
-
     @Value("${spring.cache.caffeine.spec}")
     private String caffeineSpec;
 

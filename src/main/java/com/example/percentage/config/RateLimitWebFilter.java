@@ -7,10 +7,8 @@ import io.github.bucket4j.Refill;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -20,10 +18,10 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 @Component
-//@ConditionalOnProperty(prefix = "ratelimit", name = "enabled", havingValue = "true")
 @ConfigurationProperties(prefix = "ratelimit")
 @Getter
 @Setter
+@Slf4j
 public class RateLimitWebFilter implements WebFilter {
 
     /**
@@ -43,7 +41,6 @@ public class RateLimitWebFilter implements WebFilter {
 
     private Bucket bucket;
 
-    // Después de bindear las propiedades, construimos el bucket
     @PostConstruct
     public void initBucket() {
         Bandwidth limit = Bandwidth.classic(
@@ -57,23 +54,25 @@ public class RateLimitWebFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        if (bucket.tryConsume(1)) {
+        String path = exchange.getRequest().getURI().getPath();
+        String method = exchange.getRequest().getMethod().name();
+        log.info("Request received: path={}, method={}", path, method);
+
+        // Permitir libremente Swagger + API Docs + Preflight (OPTIONS)
+        if (path.startsWith("/v3/api-docs")
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/webjars")
+                || "OPTIONS".equalsIgnoreCase(method)) {
+            log.debug("Request allowed without rate limiting: path={}, method={}", path, method);
             return chain.filter(exchange);
         }
+
+        if (bucket.tryConsume(1)) {
+            log.debug("Request allowed: path={}, method={}", path, method);
+            return chain.filter(exchange);
+        }
+        log.warn("Request rate-limited: path={}, method={}", path, method);
         exchange.getResponse().setStatusCode(org.springframework.http.HttpStatus.TOO_MANY_REQUESTS);
         return exchange.getResponse().setComplete();
     }
-
-    /*
-
-
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        if (bucket.tryConsume(1)) {
-            return chain.filter(exchange);
-        } else {
-            exchange.getResponse().setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
-            return exchange.getResponse().setComplete();
-        }
-    }*/
 }

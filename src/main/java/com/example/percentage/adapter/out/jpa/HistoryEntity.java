@@ -4,6 +4,7 @@ package com.example.percentage.adapter.out.jpa;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+
 import java.time.Instant;
 
 @Table("history")
